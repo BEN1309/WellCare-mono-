@@ -1,0 +1,32 @@
+package com.wellcare.controllers;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wellcare.dto.AuthResponseDto;
+import com.wellcare.security.CustomUserDetailsService;
+import com.wellcare.service.AuthService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponseDto> register(@RequestBody @Valid UserDto userDto) {
+        return ResponseEntity.ok(authService.registerUser(userDto));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDto> login(@RequestBody @Valid AuthRequestDto requestDto) {
+        return ResponseEntity.ok(authService.loginUser(requestDto));
+    }
+}

@@ -1,0 +1,30 @@
+package com.wellcare.util;
+
+import org.springframework.stereotype.Component;
+
+import com.wellcare.repositories.DoctorRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class DoctorIdGenerator {
+	
+	public final DoctorRepository doctorRepository;
+
+	//Custom ID Generator
+	//DOC + YY + FirstTwoLettersOfFirstName (uppercase) + 4-digit sequence
+	//Example: DOC25AR0001 → For a doctor named "Arnab" joining in 2025.
+	
+	private String generateDoctorId(String name) {
+	    String prefix = "DOC";
+	    String year = String.valueOf(java.time.Year.now().getValue()).substring(2); // "25"
+	    String initials = name.length() >= 2 ? name.substring(0, 2).toUpperCase() : name.toUpperCase();
+
+	    long count = doctorRepository.count() + 1;
+	    String sequence = String.format("%04d", count); // e.g., 0001
+
+	    return prefix + year + initials + sequence;
+	}
+	
+}

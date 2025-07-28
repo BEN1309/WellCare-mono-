@@ -1,0 +1,15 @@
+package com.wellcare.repositories;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.wellcare.entities.User;
+
+public interface UserRepository extends JpaRepository<User, String> {
+
+	 Optional<User> findByUsername(String username); // assuming you use username for login
+
+	 sboolean existsByUsername(String username);
+	
+}

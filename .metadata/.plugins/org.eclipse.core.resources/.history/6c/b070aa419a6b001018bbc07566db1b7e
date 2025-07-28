@@ -1,0 +1,9 @@
+package com.wellcare.service;
+
+public interface AuthService {
+
+	AuthResponseDto registerUser(UserDto userDto);
+
+	AuthResponseDto loginUser(AuthRequestDto requestDto);
+
+}

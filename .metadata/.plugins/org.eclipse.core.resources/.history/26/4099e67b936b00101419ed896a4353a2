@@ -1,0 +1,5 @@
+package com.wellcare.security;
+
+public class JwtAuthFilter {
+
+}

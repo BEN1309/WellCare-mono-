@@ -1,0 +1,21 @@
+package com.wellcare.serviceImpl;
+
+import com.wellcare.dto.UserDto;
+import com.wellcare.entities.User;
+import com.wellcare.service.UserService;
+
+public class UserServiceImpl implements UserService {
+
+	@Override
+	public User saveUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.wellcare.exceptions;
+
+public class ResourceNotFoundException {
+
+}

@@ -1,0 +1,5 @@
+package com.wellcare.repositories;
+
+public interface UserRepository {
+
+}

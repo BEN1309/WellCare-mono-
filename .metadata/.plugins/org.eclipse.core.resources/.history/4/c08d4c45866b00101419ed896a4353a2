@@ -1,0 +1,13 @@
+package com.wellcare.entities;
+
+public enum Specialization {
+
+		CARDIOLOGIST,
+	    DERMATOLOGIST,
+	    NEUROLOGIST,
+	    PEDIATRICIAN,
+	    ORTHOPEDIC,
+	    PSYCHIATRIST,
+	    GENERAL_PHYSICIAN
+	
+}

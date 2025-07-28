@@ -1,0 +1,5 @@
+package com.wellcare.dto;
+
+public class AuthRequestDto {
+
+}

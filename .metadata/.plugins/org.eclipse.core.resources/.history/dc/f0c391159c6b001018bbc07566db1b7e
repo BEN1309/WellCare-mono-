@@ -1,0 +1,50 @@
+package com.wellcare.serviceImpl;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.wellcare.dto.AuthRequestDto;
+import com.wellcare.dto.AuthResponseDto;
+import com.wellcare.dto.UserDto;
+import com.wellcare.entities.User;
+import com.wellcare.repositories.UserRepository;
+import com.wellcare.security.JwtUtil;
+import com.wellcare.service.AuthService;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+
+	
+	 private final UserRepository userRepository;
+	    private final PasswordEncoder passwordEncoder;
+	    private final JwtUtil jwtUtil;
+	    private final AuthenticationManager authenticationManager;
+
+	    @Override
+	    public AuthResponseDto registerUser(UserDto userDto) {
+	        User user = new User();
+	        user.setUsername(userDto.getUsername());
+	        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+	        user.setEmail(userDto.getEmail());
+	        user.setRole(userDto.getRole());
+
+	        userRepository.save(user);
+
+	        String token = jwtUtil.generateToken(user.getUsername());
+	        return AuthResponseDto.builder()
+	        .token(token)
+	        .message("User registered successfully")
+	        .build();
+	    }
+
+
+		@Override
+		public AuthResponseDto loginUser(AuthRequestDto requestDto) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+}

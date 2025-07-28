@@ -1,0 +1,5 @@
+package com.wellcare.serviceImpl;
+
+public class AuthServiceImpl {
+
+}

@@ -1,0 +1,40 @@
+package com.wellcare.serviceImpl;
+
+import java.util.List;
+
+import com.wellcare.dto.DoctorDto;
+import com.wellcare.service.DoctorService;
+
+public class DoctorServiceImpl implements DoctorService {
+
+	@Override
+	public DoctorDto createDoctor(DoctorDto doctorDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DoctorDto> getAllDoctors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DoctorDto getDoctorById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DoctorDto updateDoctor(Long id, DoctorDto doctorDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteDoctor(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

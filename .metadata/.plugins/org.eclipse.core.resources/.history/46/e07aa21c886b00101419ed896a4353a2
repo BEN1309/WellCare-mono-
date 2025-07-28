@@ -1,0 +1,51 @@
+package com.wellcare.controllers;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.wellcare.dto.DoctorDto;
+import com.wellcare.service.DoctorService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/doctors")
+@RequiredArgsConstructor
+public class DoctorController {
+
+	private final DoctorService doctorService;
+
+	@PostMapping
+	public ResponseEntity<DoctorDto> createDoctor(@Valid @RequestBody DoctorDto doctorDto) {
+		DoctorDto savedDoctor = doctorService.createDoctor(doctorDto);
+		return new ResponseEntity<>(savedDoctor, HttpStatus.CREATED);
+	}
+	
+    @GetMapping
+    public ResponseEntity<List<DoctorDto>> getAllDoctors() {
+        return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DoctorDto> getDoctorById(@PathVariable String id) {
+        return ResponseEntity.ok(doctorService.getDoctorById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DoctorDto> updateDoctor(
+            @PathVariable Long id,
+            @Valid @RequestBody DoctorDto doctorDto) {
+        return ResponseEntity.ok(doctorService.updateDoctor(id, doctorDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDoctor(@PathVariable String id) {
+        doctorService.deleteDoctor(id);
+        return ResponseEntity.noContent().build();
+    }
+	
+}

@@ -1,0 +1,5 @@
+package com.wellcare.config;
+
+public class JwtProperties {
+
+}

@@ -1,0 +1,3 @@
+spring.application.name=WellCare
+
+server.port=8088

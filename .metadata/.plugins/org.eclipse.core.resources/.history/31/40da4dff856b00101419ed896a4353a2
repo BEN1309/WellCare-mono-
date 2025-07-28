@@ -1,0 +1,36 @@
+package com.wellcare.dto;
+
+import com.wellcare.entities.Specialization;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DoctorDto {
+
+	private long id;
+
+	@NotBlank(message = "Doctor name is required")
+	private String name;
+
+	@NotBlank(message = "phone no is required")
+	private String phone;
+
+	@Min(value = 25, message = "Age must be 25")
+	private int age;
+
+	@NotNull(message = "Specialization must be provided")
+	private Specialization specialization;
+
+	@Builder.Default
+	private boolean available = true;
+
+}

@@ -1,0 +1,21 @@
+package com.wellcare.entities;
+
+import jakarta.persistence.Entity;
+import lombok.Builder;
+import lombok.Data;
+
+@Entity
+@Data
+@Builder
+public class Doctor {
+
+	private long id;
+	
+	private String name;
+	
+	private String phone;
+	
+	@Builder.Default
+	private boolean available = true;
+	
+}

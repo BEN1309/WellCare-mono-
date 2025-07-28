@@ -1,0 +1,5 @@
+package com.wellcare.controllers;
+
+public class AuthController {
+
+}

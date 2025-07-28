@@ -1,0 +1,47 @@
+package com.wellcare.serviceImpl;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import com.wellcare.dto.AuthRequestDto;
+import com.wellcare.dto.AuthResponseDto;
+import com.wellcare.dto.UserDto;
+import com.wellcare.entities.User;
+import com.wellcare.security.JwtUtil;
+import com.wellcare.service.AuthService;
+import com.wellcare.service.UserService;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+
+	
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+
+	    @Override
+	    public AuthResponseDto registerUser(UserDto userDto) {
+	    	 User savedUser = userService.saveUser(userDto);
+	         String token = jwtUtil.generateToken(savedUser.getUsername());
+	         return new AuthResponseDto(savedUser.getUsername(), token);
+	    }
+
+
+	    @Override
+	    public AuthResponseDto loginUser(AuthRequestDto requestDto) {
+	    	Authentication authentication = authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(
+	                        requestDto.getUsername(),
+	                        requestDto.getPassword()
+	                )
+	        );
+
+	        String token = jwtUtil.generateToken(requestDto.getUsername());
+	        return new AuthResponseDto(requestDto.getUsername(), token);
+	    }
+}
