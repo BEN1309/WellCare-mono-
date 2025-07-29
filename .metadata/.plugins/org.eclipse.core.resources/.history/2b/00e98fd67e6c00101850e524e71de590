@@ -1,0 +1,5 @@
+package com.wellcare.actuator;
+
+public class CustomHealthEndPoint {
+
+}

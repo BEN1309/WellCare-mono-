@@ -1,0 +1,36 @@
+-----------------------------------------------------------------------------------------
+Before Merge:
+
+📂 Local Repo
+ ├── main
+ │    └── A - B
+ └── cookie-cache-feature
+      └── A - B - C - D ← (you are here)
+
+After Merge:
+
+📂 Local Repo
+ └── main
+      └── A - B - C - D (Merged)
+-----------------------------------------------------------------------------------------
+1️⃣ 🔍 COMPARE
+➤ To compare your current branch (cookie-cache-feature) with main:
+
+git diff main
+=========================================================================================
+2️⃣ ⬇️ PULL (Update Local From Remote)
+➤ To update your local main from GitHub remote:
+
+git checkout main
+git pull origin main
+
+If you're already on the feature branch and want latest main before merging:
+
+git checkout main
+git pull origin main
+git checkout cookie-cache-feature
+git merge main
+===========================================================================================
+3️⃣ 🔀 MERGE (Combine Changes)
+git merge main
+--------------------------------------------------------------------------------------------

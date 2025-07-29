@@ -1,0 +1,18 @@
+package com.wellcare.actuator;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomHealthEndPoint {
+
+	public Map<String, Object> customHealthCheck() {
+		return Map.of(
+				"status", "UP",
+				"message", "WellCare custom health is OK",
+				"version", "1.0.2"
+				);
+	}
+	
+}

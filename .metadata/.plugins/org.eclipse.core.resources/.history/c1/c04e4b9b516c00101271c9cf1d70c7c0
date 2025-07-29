@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WellCare | Login</title>
+</head>
+<body>
+    <h2>Welcome to WellCare</h2>
+    <p>Please log in to access your dashboard.</p>
+
+    <form id="loginForm">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="responseMessage" style="color:red;"></p>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("http://localhost:8888/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.token) {
+                localStorage.setItem("jwtToken", data.token);
+                window.location.href = "home.html";
+            } else {
+                document.getElementById("responseMessage").textContent = "Login failed: " + (data.message || "Invalid credentials");
+            }
+        });
+    </script>
+</body>
+</html>

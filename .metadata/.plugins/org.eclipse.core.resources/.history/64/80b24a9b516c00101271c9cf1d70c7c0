@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WellCare | Dashboard</title>
+</head>
+<body>
+    <h2>Welcome to Your WellCare Dashboard</h2>
+    <p id="welcomeMessage">Fetching your details...</p>
+
+    <button onclick="logout()">Logout</button>
+
+    <script>
+        async function loadUserData() {
+            const token = localStorage.getItem("jwtToken");
+            if (!token) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const response = await fetch("http://localhost:8888/user/me", {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (response.ok) {
+                const user = await response.json();
+                document.getElementById("welcomeMessage").textContent =
+                    `Hello, ${user.username}! You are logged in as ${user.role}.`;
+            } else {
+                document.getElementById("welcomeMessage").textContent =
+                    "Session expired or unauthorized. Redirecting to login...";
+                setTimeout(() => {
+                    localStorage.removeItem("jwtToken");
+                    window.location.href = "login.html";
+                }, 2000);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("jwtToken");
+            window.location.href = "login.html";
+        }
+
+        loadUserData();
+    </script>
+</body>
+</html>

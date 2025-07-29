@@ -11,12 +11,18 @@ public class SwaggerConfig {
 
 	@Bean
 	OpenAPI apiInfo() {
-		return new OpenAPI().info(new Info().title("WellCare API")
-				.description("API documentation for WellCare monolithic application").version("v1.0"));
+		return new OpenAPI()
+				.info(new Info()
+						.title("WellCare API")
+						.description("API documentation for WellCare monolithic application").version("v1.0"));
 	}
 
 	@Bean
 	GroupedOpenApi publicApi() {
-		return GroupedOpenApi.builder().group("wellcare").packagesToScan("com.wellcare.controller").build();
+		return GroupedOpenApi.builder()
+				.group("wellcare")
+				.pathsToMatch("/api/**")
+				.packagesToScan("com.wellcare.controllers")
+				.build();
 	}
 }
