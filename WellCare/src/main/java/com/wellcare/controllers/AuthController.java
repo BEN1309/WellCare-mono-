@@ -11,6 +11,8 @@ import com.wellcare.dto.AuthResponseDto;
 import com.wellcare.dto.UserDto;
 import com.wellcare.service.AuthService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +29,20 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody @Valid AuthRequestDto requestDto) {
-        return ResponseEntity.ok(authService.loginUser(requestDto));
+    public ResponseEntity<AuthResponseDto> login(
+    		@RequestBody @Valid AuthRequestDto requestDto, 
+    		HttpServletResponse response) {
+    	
+        AuthResponseDto authResponse = authService.loginUser(requestDto);
+    	
+    	//Create HTTP-only cookie with JWT Token
+        Cookie jwtCookie = new Cookie("jwtToken", authResponse.getToken());
+    	jwtCookie.setHttpOnly(true);
+    	jwtCookie.setPath("/");   // cookie available for all endpoints
+    	jwtCookie.setMaxAge(3600); // 1hr 
+        
+    	response.addCookie(jwtCookie);
+    	
+    	return ResponseEntity.ok(authResponse);
     }
 }

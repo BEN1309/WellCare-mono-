@@ -3,6 +3,8 @@ package com.wellcare.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.wellcare.dto.DoctorDto;
@@ -50,6 +52,7 @@ public class DoctorServiceImpl implements DoctorService {
 	
 	@Override
 	@Transactional
+	@CacheEvict(value = "doctors", allEntries = true)
 	public DoctorDto createDoctor(DoctorDto doctorDto) {
 		 Doctor doctor = mapToEntity(doctorDto);
 		 
@@ -61,6 +64,7 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
+	@Cacheable("doctors")
 	public List<DoctorDto> getAllDoctors() {
 		return doctorRepository.findAll()
                 .stream()
