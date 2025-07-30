@@ -1,0 +1,75 @@
+package com.wellcare.controllers;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wellcare.dto.PatientDto;
+import com.wellcare.service.PatientService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@Validated
+@RestController
+@RequestMapping("/api/patients")
+@RequiredArgsConstructor
+public class PatientController {
+
+	private final PatientService patientService;
+
+	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<PatientDto> createPatient(@Valid @RequestBody PatientDto patientDto) {
+		PatientDto savedPatient = patientService.createPatient(patientDto);
+		return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
+	}
+
+	@GetMapping
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<List<PatientDto>> getAllPatients() {
+		return ResponseEntity.ok(patientService.getAllPatients());
+	}
+
+	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<PatientDto> getPatientById(@PathVariable String id) {
+		return ResponseEntity.ok(patientService.getPatientById(id));
+	}
+
+	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'PATIENT')")
+	public ResponseEntity<PatientDto> updatePatient(@PathVariable String id,
+			@Valid @RequestBody PatientDto patientDto) {
+		return ResponseEntity.ok(patientService.updatePatient(id, patientDto));
+	}
+
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Void> deletePatient(@PathVariable String id) {
+		patientService.deletePatient(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/me")
+	public ResponseEntity<String> getUserFromCookie(
+			@CookieValue(name = "token", required = false) String token) {
+		if (token == null || token.isBlank()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body("No Token Found");
+		}
+		return ResponseEntity.ok("Token : " + token);
+	}
+}

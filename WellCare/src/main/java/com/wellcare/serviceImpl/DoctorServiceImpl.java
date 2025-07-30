@@ -57,7 +57,7 @@ public class DoctorServiceImpl implements DoctorService {
 		 Doctor doctor = mapToEntity(doctorDto);
 		 
 		 String generatedId = doctorIdGenerator.generateDoctorId(doctor.getName());
-		    doctor.setId(generatedId);
+		 doctor.setId(generatedId);
 		 
 	     Doctor saved = doctorRepository.save(doctor);
 	     return mapToDto(saved);

@@ -1,0 +1,24 @@
+package com.wellcare.util;
+
+import com.wellcare.exceptions.PatientRepository;
+
+public class PatientIdGenerator {
+
+	private final PatientRepository patientRepository;
+
+    // Custom ID Generator
+    // Format: PAT + YY + FirstTwoLettersOfFirstName (uppercase) + 4-digit sequence
+    // Example: PAT25RA0001 → For a patient named "Rahul" registered in 2025.
+
+    public String generatePatientId(String name) {
+        String prefix = "PAT";
+        String year = String.valueOf(java.time.Year.now().getValue()).substring(2); // e.g., "25"
+        String initials = name.length() >= 2 ? name.substring(0, 2).toUpperCase() : name.toUpperCase();
+
+        long count = patientRepository.count() + 1;
+        String sequence = String.format("%04d", count); // e.g., 0001
+
+        return prefix + year + initials + sequence;
+    }
+	
+}

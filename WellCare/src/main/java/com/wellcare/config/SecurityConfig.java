@@ -39,7 +39,7 @@ public class SecurityConfig {
     };
 
     private static final String[] ADMIN_ENDPOINTS = {
-        "/api/doctors/**"
+        "/api/doctors/**", "/api/patients/**"
     };
 
     @Bean
@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(ADMIN_ENDPOINTS).hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(ADMIN_ENDPOINTS).hasAnyRole("ADMIN", "DOCTOR", "PATIENT")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

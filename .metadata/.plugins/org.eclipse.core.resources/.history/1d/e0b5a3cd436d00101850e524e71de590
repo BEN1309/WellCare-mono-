@@ -1,0 +1,5 @@
+package com.wellcare.service;
+
+public class PatientService {
+
+}
