@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: wellcare-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev_wellcare    # ← updated
+      MYSQL_USER: wellcare
+      MYSQL_PASSWORD: wellcare123
+    ports:
+      - "3307:3306"
+    networks:
+      - wellcare-net
+
+  wellcare-app:
+    build: .
+    container_name: wellcare-app
+    ports:
+      - "8888:8888"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dev_wellcare    # ← updated
+      SPRING_DATASOURCE_USERNAME: wellcare
+      SPRING_DATASOURCE_PASSWORD: wellcare123
+    networks:
+      - wellcare-net
+
+networks:
+  wellcare-net:

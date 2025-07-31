@@ -1,0 +1,42 @@
+package com.wellcare.entities;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "patients")
+public class Patient {
+
+	@Id
+	private String id;
+
+	@Column(name = "pat_name", nullable = false)
+	private String name;
+
+	@Column(name = "pat_mobile")
+	private String phone;
+
+	@Column(name = "pat_age")
+	private int age;
+	
+	@Embedded
+	private Address address;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+}
